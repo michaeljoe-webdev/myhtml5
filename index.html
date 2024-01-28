@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My HTML5</title>
+    <!-- <title>My HTML5</title> -->
+    <title>DexOTG</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- <meta http-equiv="refresh" content="0; url=http://127.0.0.1:5500/index"> -->
@@ -13,29 +14,112 @@
     <!-- <meta name="robot" content="index,follow"> -->
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <!-- <link rel="canonical" href="styles.css"> -->
+    <!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png">
     <style>
         .container{
             border: 1px solid red;
-            border-top-left-radius: 50%;
-            border-top-right-radius: 50%;
-            border-bottom-left-radius: 50%;
-            border-bottom-right-radius: 50%;
+            
         }
         .box{
             border: 1px solid blue;
-            border-top-left-radius: 50%;
-            border-top-right-radius: 50%;
-            border-bottom-left-radius: 50%;
-            border-bottom-right-radius: 50%;
+        }
+        .box1{
+            border: 1px solid blue;
+        }
+        .mon{
+            border: 1px dashed black;
         }
     </style>    
-
+<!-- 320px, 768px, and 1200px -->
 </head>
 <body>
-    <div class="container">TEST
+    <div class="container">
+        <div class="brand">DexOTG</div>
+        <div class="container">
+            <div class="box1">Your pokedex on the go.</div>
+        </div>
+        <div id="pagination">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+            <select id="perPageSelect">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>Items per page</span>
+        </div>
+    
+        <ul id="itemList">
+        <!-- Your items will be displayed here -->
+        </ul>
+        <div>
+            <select id="limit"> 
+                <option value="20">20</option> 
+                <option value="50">50</option> 
+            </select>
+            <button onclick="getValue()">Get Value</button>
+            <table>
+                <tr>
+                    <td id="mon" value="1" >1</td>
+                </tr>
+            </table>
+        </div>
         <div class="box">
-            <p>AAll meta information goes in the head section...</p>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" />
+            <p>All meta information goes in the head section...</p>
         </div>
     </div>
+    <script src="pagination.js"></script>
+    <script>
+        // var tdElem = document.getElementById ( "mon" );
+        // var tdText = tdElem.textContent | tdElem.innerText;
+        const retrievedObject = JSON.parse(localStorage.getItem('pokeList'));
+
+        if(retrievedObject == undefined){
+            //Fetch
+            var getPokeList = fetch('https://pokeapi.co/api/v2/pokemon/?limit=10000') .then(response => response.json())
+
+
+            //Promise
+            const promise1 = Promise.resolve(getPokeList);
+            promise1.then((value) => {
+                console.log(value.results);
+                // Store an object
+                // const monArray = { name: 'John', age: 30 };
+                localStorage.setItem('pokeList', JSON.stringify(value.results));
+
+                // return value.results
+                // Expected output: 123
+                // for (var i = 0; value.results.length > 0; i++) {
+                //     document.getElementById ( "mon" ).innerText = value.results[i];
+                // }
+            });
+            
+            const retrievedObject = JSON.parse(localStorage.getItem('pokeList'));
+            console.log('retrive',retrievedObject); // { name: 'John', age: 30 }
+        }else{
+            // for (var i = 0; retrievedObject.length > 0; i++) {
+            //     document.getElementById ( "mon" ).innerText = retrievedObject[i];
+            // }
+        }
+
+        console.log(' limit.innerText', document.getElementById("limit").value); // { name: 'John', age: 30 }
+        console.log('retrive',retrievedObject); // { name: 'John', age: 30 }
+        function getValue() {
+            // Get the selected value
+            var selectedValue = document.getElementById("limit").value;
+            console.log("Selected value: " + selectedValue);
+        }
+        
+        //MOUNT
+        // Set the value to "20" when the page is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("limit").value = "20";
+            document.getElementById("perPageSelect").value = "10";
+        });
+
+    </script>
 </body>
 </html>
