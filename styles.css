@@ -7,9 +7,18 @@ body {
   height: 100vh;
   background-size: cover;
 }
+
+.brand {
+  position: absolute;
+  top: -5px;
+  left: 30px;
+  height: 100px;
+}
+
 table {
   border-collapse: collapse;
-  width: 100%;
+  width: 98%;
+  background-color: rgb(255, 110, 110);
 }
 th, td {
   border: 1px solid #161414;
@@ -27,6 +36,8 @@ img {
   margin: auto;
 }
 .pagination-toolbar {
+  border-collapse: collapse;
+  width: 97.5%;
   border: 1px solid red;
   background-color: #f2f2f2;
   margin-bottom: 15px;
@@ -65,18 +76,6 @@ img {
   font-style: italic;
 
 }
-/* .description {
-  position: absolute;
-  border: 1px solid red;
-
-  font-size: small;
-  margin-bottom: 30px;
-  color: white;
-  font-style: italic;
-} */
-.table-container {
-  background-color: rgb(255, 110, 110);
-}
 
 /* ICONS */
 .material-icons {
@@ -84,13 +83,7 @@ img {
   margin-top: -12px;
   margin-left: -11px;
 }
-.brand {
-  position: absolute;
-  top: -5px;
-  left: 30px;
-  /* font-size: 18px; */
-  height: 100px;
-}
+
 #pokeImg {
   width: 100px;
   height: 100px;
