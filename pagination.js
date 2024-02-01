@@ -1,5 +1,3 @@
-    // Simulated data for demonstration
-    // const items = Array.from({ length: 100 }, (_, index) => `Item ${index + 1}`);
     const items = JSON.parse(localStorage.getItem('pokeList'));
 
     const perPageSelect = document.getElementById('perPageSelect');
@@ -11,6 +9,7 @@
     let itemsPerPage = parseInt(perPageSelect.value, 10);
 
     function updateList(list, method) {
+      console.log(window.outerWidth+' x '+window.outerHeight)
       // console.log(method)
       const startIndex = currentPage * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
@@ -19,10 +18,11 @@
       const itemGrid = document.getElementById('itemGrid');
       itemGrid.innerHTML = ''; // Clear previous content
     
-      for (let i = 0; i < displayedItems.length; i += 10) {
+      const itemsPerWidth = window.outerWidth >= 740 ? 10 : 5
+      for (let i = 0; i < displayedItems.length; i += itemsPerWidth) {
         // Create a new row for every 10 items
         const row = itemGrid.insertRow();
-        for (let j = i; j < i + 10 && j < displayedItems.length; j++) {
+        for (let j = i; j < i + itemsPerWidth && j < displayedItems.length; j++) {
           // Create a cell in the row for each item
           const cell = row.insertCell();
           const span = document.createElement('span');
