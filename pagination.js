@@ -9,16 +9,14 @@
     let itemsPerPage = parseInt(perPageSelect.value, 10);
 
     function updateList(list, method) {
-      console.log(window.outerWidth+' x '+window.outerHeight)
-      // console.log(method)
       const startIndex = currentPage * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
       const displayedItems = method == "PAGE" ? list.slice(startIndex, endIndex) : list;
+      const itemsPerWidth = window.outerWidth >= 740 ? 10 : method == "PAGE" ? 5 : 3
  
       const itemGrid = document.getElementById('itemGrid');
       itemGrid.innerHTML = ''; // Clear previous content
     
-      const itemsPerWidth = window.outerWidth >= 740 ? 10 : 5
       for (let i = 0; i < displayedItems.length; i += itemsPerWidth) {
         // Create a new row for every 10 items
         const row = itemGrid.insertRow();
@@ -34,7 +32,6 @@
 
           cell.appendChild(span);
           const img = document.createElement('img');
-          // const pokemonIndex = startIndex + j + 1; // Adjust index to start from 1 instead of 0
           const pokemonIndex = displayedItems[j].number
           img.id = 'pokeImg';
           img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonIndex}.png`;
