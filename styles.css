@@ -87,9 +87,9 @@ img {
   animation: animate 5s infinite;
 }
 @keyframes animate {
-  0% {box-shadow: 10px 10px 5px rgb(223, 45, 25);}
-  50% {box-shadow: 10px 10px 5px blue;}
-  100% {box-shadow: 10px 10px 5px rgb(7, 229, 81);}
+  0% {box-shadow: 1px 1px 1px 1px rgb(223, 45, 25);}
+  50% {box-shadow: 1px 1px 1px 1px blue;}
+  100% {box-shadow: 1px 1px 1px 1px rgb(7, 229, 81);}
   /* 0% {
 		background-position: 0 0;
 	}

@@ -27,6 +27,11 @@
           const cell = row.insertCell();
           const span = document.createElement('span');
           span.textContent = (displayedItems[j].number) + '. ' + (displayedItems[j].name);
+          // span.style.border = "1px solid white";
+          span.style.marginBottom = "5px";
+          span.style.marginRight = "5px";
+          
+
           cell.appendChild(span);
           const img = document.createElement('img');
           // const pokemonIndex = startIndex + j + 1; // Adjust index to start from 1 instead of 0
