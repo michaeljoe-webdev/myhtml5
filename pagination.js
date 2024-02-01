@@ -10,11 +10,12 @@
     let currentPage = 0;
     let itemsPerPage = parseInt(perPageSelect.value, 10);
 
-    function updateList() {
+    function updateList(list, method) {
+      // console.log(method)
       const startIndex = currentPage * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const displayedItems = items.slice(startIndex, endIndex);
-    
+      const displayedItems = method == "PAGE" ? list.slice(startIndex, endIndex) : list;
+ 
       const itemGrid = document.getElementById('itemGrid');
       itemGrid.innerHTML = ''; // Clear previous content
     
@@ -25,10 +26,12 @@
           // Create a cell in the row for each item
           const cell = row.insertCell();
           const span = document.createElement('span');
-          span.textContent = (startIndex + j + 1) + '. ' + (displayedItems[j].name);
+          span.textContent = (displayedItems[j].number) + '. ' + (displayedItems[j].name);
           cell.appendChild(span);
           const img = document.createElement('img');
-          const pokemonIndex = startIndex + j + 1; // Adjust index to start from 1 instead of 0
+          // const pokemonIndex = startIndex + j + 1; // Adjust index to start from 1 instead of 0
+          const pokemonIndex = displayedItems[j].number
+          img.id = 'pokeImg';
           img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonIndex}.png`;
           img.alt = `Pokemon ${pokemonIndex}`;
 
@@ -48,37 +51,18 @@
             });
 
             infoPromise.then((value) => {
-              console.log('Resolved Value:', value);
+              // console.log('Resolved Value:', value);
               const pokeId = document.getElementById('pokeId');
               pokeId.textContent = (value.id) + '. ' + (value.name);
               const pokeInfo = document.getElementById('pokeInfo');
               typePromise.then((value) => {
                 pokeInfo.textContent = 'TYPE:' + value.name;
                 // pokeType = value.name
-                console.log('Resolved Type:', value);
+                // console.log('Resolved Type:', value);
   
               })
-              
-
-             
-
-              
-            
-            
-            // const span = document.createElement('span');
-            // span.textContent = promise1.id;
-            // modalImg.appendChild(span);
 
             });
-            //Promise
-            // const promise1 = Promise.resolve(getPokeInfo);
-            // promise1.then((value) => {
-            //   console.log('value',value)
-
-              
-            // });
-            // localStorage.setItem('pokeList', JSON.stringify(value.results));
-
 
             // Open modal dialog with the clicked Pokémon image
             const modal = document.getElementById('myModal');
@@ -105,14 +89,14 @@
     function handlePerPageChange() {
       itemsPerPage = parseInt(perPageSelect.value, 10);
       currentPage = 0;
-      updateList();
+      updateList(items,"PAGE");
       updateButtons();
     }
 
     function handlePrevClick() {
       if (currentPage > 0) {
         currentPage--;
-        updateList();
+        updateList(items,"PAGE");
         updateButtons();
       }
     }
@@ -121,7 +105,7 @@
       const lastPage = Math.ceil(items.length / itemsPerPage) - 1;
       if (currentPage < lastPage) {
         currentPage++;
-        updateList();
+        updateList(items,"PAGE");
         updateButtons();
       }
     }
@@ -130,15 +114,28 @@
     function getValue() {
         // Get the selected value
         var selectedValue = document.getElementById("perPageSelect").value;         
-        console.log("Selected value: " + selectedValue);
+        // console.log("Selected value: " + selectedValue);
     } 
 
+    function searchCheck() {
+      const val = document.getElementById("search").value; 
+      const displayedItems = items.filter((item,index)=> {
+        // console.log('item.name',item.name.toUpperCase())
+        let itemName = item.name.toUpperCase()
+        // item.index = index
+        // item.number = index + 1
+        return itemName.includes(val.toUpperCase())
+      });
 
+      // console.log('val',val,displayedItems)
+      updateList(displayedItems,"SEARCH");
+    }
 
 
     
 
     perPageSelect.addEventListener('change', handlePerPageChange);
+    // search.addEventListener('change', searchCheck);
     prevBtn.addEventListener('click', handlePrevClick);
     nextBtn.addEventListener('click', handleNextClick);
 
@@ -154,12 +151,16 @@
         //Promise
         const promise1 = Promise.resolve(getPokeList);
         promise1.then((value) => {
-            localStorage.setItem('pokeList', JSON.stringify(value.results));
+            const results = value.results.filter((item,index)=> {
+              item.number = index + 1
+              return item
+            });
+            localStorage.setItem('pokeList', JSON.stringify(results));
         });
         
         items = JSON.parse(localStorage.getItem('pokeList'));
       }
     });
 
-    updateList();
+    updateList(items, "PAGE");
     updateButtons();

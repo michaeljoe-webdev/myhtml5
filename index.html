@@ -14,17 +14,23 @@
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <!-- <link rel="canonical" href="styles.css"> -->
     <!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png">
+    <!-- <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"> -->
+    <link rel="icon" type="image/x-icon" href="./dexotg.png">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <!-- POKEMON SPRITE SVG PNG src="https://github.com/PokeAPI/sprites" -->
+    <!-- <link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" /> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="grid-container">
-        <div class="brand">DexOTG</div>
+        <div><img class="brand" src="./dexotg.png" /></div>
+        <br>
+        <br>
+        <br>
         <div class="container">
-            <div class="box1">Your pokedex on the go.</div>
+            <div class="description">Your pokedex on the go.</div>
         </div>
-        <div id="pagination">
+        <div class="pagination-toolbar">
             <button id="prevBtn">Previous</button>
             <button id="nextBtn">Next</button>
             <select id="perPageSelect">
@@ -33,10 +39,15 @@
             <option value="50">50</option>
             <option value="100">100</option>
             </select>
-            <span>Items per page</span>
+            <!-- <span>Items per page</span> -->
+            <br>
+            <span class="search">Search: 
+                <input type="text" id="search" value="" onchange="searchCheck()" placeholder="keyword"/>
+                <button id="searchButton"><span class="material-icons">search</span></button>  
+            </span>
         </div>
         <div>
-            <table id="itemGrid"></table>
+            <table class="table-container" id="itemGrid"></table>
         </div>
         <!-- Modal dialog -->
         <div id="myModal" class="modal">
